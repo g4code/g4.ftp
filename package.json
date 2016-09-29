@@ -35,6 +35,6 @@
     "commander" : "*"
   },
   "bin": {
-    "rcompressor": "./bin/ftp.js"
+    "g4ftp": "./bin/ftp.js"
   }
 }
