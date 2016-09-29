@@ -1,30 +1,32 @@
 
 var folder   = require("./folder")
-    JsFtp    = require("jsftp"),
+JsFtp    = require("jsftp"),
     fs       = require('fs'),
     _        = require("underscore"),
     evento   = require("evento"),
     informer = require("informer");
 
+var path  = require('path');
+
 var folders = [
-   "public/bower",
-   "public/css",
-   "public/fonts",
-   "public/img",
-   "public/js",
-   "public/plugins",
-   "public/pretty-exceptions"
+    "public/bower",
+    "public/css",
+    "public/fonts",
+    "public/img",
+    "public/js",
+    "public/plugins",
+    "public/pretty-exceptions"
 ];
 
 var files = [
     "public/favicon.png",
     "public/favicon.ico"
- ];
+];
 
 function Ftp()
 {
     informer.title("ftp")
-            .titleColor("magenta");
+        .titleColor("magenta");
 
     evento.on("error",   _.bind(informer.error,   informer));
     evento.on("success", _.bind(informer.success, informer));
@@ -55,9 +57,16 @@ Ftp.prototype = {
         return this.conf.destination + '/' + name;
     },
 
+    getAbsolutePath: function(pathValue)
+    {
+        return path.normalize(pathValue.charAt(0) === '/' ?
+            pathValue :
+        process.cwd() + '/' + pathValue);
+    },
+
     getConfig: function()
     {
-        var config = fs.readFileSync(__dirname + '/../../../' + this.configPath);
+        var config = fs.readFileSync(this.getAbsolutePath(this.configPath));
         return JSON.parse(config)[this.env];
     },
 
@@ -72,7 +81,7 @@ Ftp.prototype = {
         _.isUndefined(this.env) || _.isUndefined(this.getConfig())
             ? evento.trigger("error", "env variable not valid")
             : this.connect()
-                  .uploadFiles();
+            .uploadFiles();
     },
 
     connect: function()
