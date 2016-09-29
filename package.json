@@ -1,0 +1,40 @@
+{
+  "name": "g4.ftp",
+  "version": "0.0.1",
+  "description": "ftp client",
+  "main": "./src/ftp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/g4code/g4.ftp"
+  },
+  "keywords": [
+    "g4.ftp"
+  ],
+  "author": "G4 Code <office@g4code.com>",
+  "maintainers": [
+    "Drasko Gomboc <drasko.gomboc@gmail.com>",
+    "Zeljko Simic <zeljkosbgd@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/g4code/g4.ftp/issues"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
+  "dependencies": {
+    "underscore": "*",
+    "jsftp"     : "*",
+    "wrench"    : "*",
+    "evento"    : "*",
+    "informer"  : "*",
+    "commander" : "*"
+  },
+  "bin": {
+    "rcompressor": "./bin/ftp.js"
+  }
+}
