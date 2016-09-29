@@ -1,6 +1,6 @@
 {
   "name": "g4.ftp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ftp client",
   "main": "./src/ftp.js",
   "scripts": {
