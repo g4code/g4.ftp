@@ -5,15 +5,22 @@ var path   = require("path"),
     evento = require("evento");
 
 
-function File()
+function File(config)
 {
-    this.projectRootPath = path.resolve(__dirname+'/../../../');
+    this.projectRootPath = this.getAbsolutePath();
 };
 
 File.prototype = {
-  
+
+    config: null,
+
     fileName: null,
-    
+
+    getAbsolutePath: function()
+    {
+        return path.normalize(process.cwd());
+    },
+
     getData: function()
     {
         return {
@@ -21,17 +28,17 @@ File.prototype = {
             dest: this.getDestinationPath()
         };
     },
-    
+
     getDestinationPath: function()
     {
         return this.fileName.replace(/^(\/|)public\//, "");
     },
-    
+
     getSourcePath: function()
     {
         return path.resolve(this.projectRootPath + "/" + this.fileName);
     },
-    
+
     run: function()
     {
         fs.lstatSync(this.getSourcePath()).isFile()

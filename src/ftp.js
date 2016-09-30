@@ -108,6 +108,7 @@ Ftp.prototype = {
         folder.files         = files;
         folder.folderName    = '';
         folder.ftpConnection = this.jsftp;
+        folder.config        = this.conf;
 
         evento.trigger("uploadFile");
     },
@@ -123,6 +124,7 @@ Ftp.prototype = {
 
         folder.folderName    = folders[this.key];
         folder.ftpConnection = this.jsftp;
+        folder.config        = this.conf;
         folder.run();
     },
 

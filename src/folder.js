@@ -6,20 +6,27 @@ var path   = require("path"),
     evento = require("evento");
 
 
-function Folder()
+function Folder(config)
 {
-    this.projectRootPath = path.resolve(__dirname+'/../../../');
+    this.projectRootPath = this.getAbsolutePath();
     evento.on("uploadFile", _.bind(this.uploadFile, this));
 };
 
 Folder.prototype = {
-  
+
+    config: null,
+
     files: null,
 
     key: -1,
 
     folderName: null,
-    
+
+    getAbsolutePath: function()
+    {
+        return path.normalize(process.cwd());
+    },
+
     getDestination: function()
     {
         return this.folderName.replace(/^(\/|)public\//, "");
@@ -34,7 +41,6 @@ Folder.prototype = {
     {
         this.files = wrench.readdirSyncRecursive(this.getFolderPath());
         this.key = -1;
-
         evento.trigger("mkdir", this.getDestination());
     },
 
@@ -48,6 +54,7 @@ Folder.prototype = {
         }
 
         file.fileName = this.folderName + "/" + this.files[this.key];
+        file.config = this.config;
         file.run();
     }
 };
