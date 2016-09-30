@@ -9,18 +9,18 @@ JsFtp    = require("jsftp"),
 var path  = require('path');
 
 var folders = [
-    "public/bower",
+    //"public/bower",
     "public/css",
-    "public/fonts",
-    "public/img",
+    //"public/fonts",
+    //"public/img",
     "public/js",
-    "public/plugins",
-    "public/pretty-exceptions"
+    //"public/plugins",
+    //"public/pretty-exceptions"
 ];
 
 var files = [
-    "public/favicon.png",
-    "public/favicon.ico"
+    //"public/favicon.png",
+    //"public/favicon.ico"
 ];
 
 function Ftp()
