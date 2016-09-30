@@ -5,7 +5,7 @@ var path   = require("path"),
     evento = require("evento");
 
 
-function File(config)
+function File()
 {
     this.projectRootPath = this.getAbsolutePath();
 };
