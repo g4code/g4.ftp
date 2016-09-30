@@ -8,21 +8,6 @@ JsFtp    = require("jsftp"),
 
 var path  = require('path');
 
-var folders = [
-    //"public/bower",
-    "public/css",
-    //"public/fonts",
-    //"public/img",
-    "public/js",
-    //"public/plugins",
-    //"public/pretty-exceptions"
-];
-
-var files = [
-    //"public/favicon.png",
-    //"public/favicon.ico"
-];
-
 function Ftp()
 {
     informer.title("ftp")
@@ -51,6 +36,9 @@ Ftp.prototype = {
 
     key: -1,
 
+    files:[],
+
+    folders: [],
 
     getDestination: function(name)
     {
@@ -66,8 +54,11 @@ Ftp.prototype = {
 
     getConfig: function()
     {
-        var config = fs.readFileSync(this.getAbsolutePath(this.configPath));
-        return JSON.parse(config)[this.env];
+        if(this.conf === null) {
+            var config = fs.readFileSync(this.getAbsolutePath(this.configPath));
+            this.conf = JSON.parse(config)[this.env];
+        }
+        return this.conf;
     },
 
     mkdir: function(dest)
@@ -81,6 +72,7 @@ Ftp.prototype = {
         _.isUndefined(this.env) || _.isUndefined(this.getConfig())
             ? evento.trigger("error", "env variable not valid")
             : this.connect()
+            .setFilesFolders()
             .uploadFiles();
     },
 
@@ -98,6 +90,13 @@ Ftp.prototype = {
         return this;
     },
 
+    setFilesFolders: function()
+    {
+        this.files      = this.getConfig().source_files;
+        this.folders    = this.getConfig().source_folders;
+        return this;
+    },
+
     quit: function()
     {
         this.jsftp.raw.quit(_.bind(this.onQuit, this));
@@ -105,7 +104,7 @@ Ftp.prototype = {
 
     uploadFiles: function()
     {
-        folder.files         = files;
+        folder.files         = this.files;
         folder.folderName    = '';
         folder.ftpConnection = this.jsftp;
         folder.config        = this.conf;
@@ -117,12 +116,12 @@ Ftp.prototype = {
     {
         ++this.key;
 
-        if(_.isUndefined(folders[this.key])) {
+        if(_.isUndefined(this.folders[this.key])) {
             evento.trigger('quit');
             return;
         }
 
-        folder.folderName    = folders[this.key];
+        folder.folderName    = this.folders[this.key];
         folder.ftpConnection = this.jsftp;
         folder.config        = this.conf;
         folder.run();
