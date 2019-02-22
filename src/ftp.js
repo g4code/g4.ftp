@@ -12,11 +12,11 @@ function Ftp()
 {
     this.info = new Info()
 
-    evento.on("error",   this.info.error.bind(info));
-    evento.on("success", this.info.success.bind(info));
-    evento.on("info",    this.info.info.bind(info));
-    evento.on("warning", this.info.warning.bind(info));
-    evento.on("loading", this.info.loading.bind(info));
+    evento.on("error",   this.info.error.bind(this.info));
+    evento.on("success", this.info.success.bind(this.info));
+    evento.on("info",    this.info.info.bind(this.info));
+    evento.on("warning", this.info.warning.bind(this.info));
+    evento.on("loading", this.info.loading.bind(this.info));
 
     evento.on("uploadFolder", _.bind(this.uploadFolder, this));
     evento.on("doUpload",     _.bind(this.doUpload,     this));
