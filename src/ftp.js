@@ -4,7 +4,7 @@ var JsFtp    = require("jsftp")
 var fs       = require('fs')
 var _        = require("underscore")
 var evento   = require("evento")
-var Info     = require('info')
+var Info     = require('./info')
 
 var path  = require('path');
 
