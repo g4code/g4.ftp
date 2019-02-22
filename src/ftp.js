@@ -3,21 +3,19 @@ var folder   = require("./folder")
 JsFtp    = require("jsftp"),
     fs       = require('fs'),
     _        = require("underscore"),
-    evento   = require("evento"),
-    informer = require("informer");
+    evento   = require("evento")
 
 var path  = require('path');
 
 function Ftp()
 {
-    informer.title("ftp")
-        .titleColor("magenta");
+    this.info = new Info()
 
-    evento.on("error",   _.bind(informer.error,   informer));
-    evento.on("success", _.bind(informer.success, informer));
-    evento.on("info",    _.bind(informer.info,    informer));
-    evento.on("warning", _.bind(informer.warning, informer));
-    evento.on("loading", _.bind(informer.loading, informer));
+    evento.on("error",   info.error.bind(info));
+    evento.on("success", info.success.bind(info));
+    evento.on("info",    info.info.bind(info));
+    evento.on("warning", info.warning.bind(info));
+    evento.on("loading", info.loading.bind(info));
 
     evento.on("uploadFolder", _.bind(this.uploadFolder, this));
     evento.on("doUpload",     _.bind(this.doUpload,     this));
@@ -152,6 +150,7 @@ Ftp.prototype = {
     onQuit: function(err, data)
     {
         evento.trigger("info", "connection closed");
+        this.info.display()
     }
 };
 
