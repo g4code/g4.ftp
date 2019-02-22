@@ -63,7 +63,7 @@ Ftp.prototype = {
     mkdir: function(dest)
     {
         evento.trigger("loading", "Creating folder: " + dest);
-        this.jsftp.raw.mkd(this.getDestination(dest), _.bind(this.onMkdir, this));
+        this.jsftp.raw("mkd", this.getDestination(dest), _.bind(this.onMkdir, this));
     },
 
     run: function()
@@ -98,7 +98,7 @@ Ftp.prototype = {
 
     quit: function()
     {
-        this.jsftp.raw.quit(_.bind(this.onQuit, this));
+        this.jsftp.raw("quit", _.bind(this.onQuit, this));
     },
 
     uploadFiles: function()
