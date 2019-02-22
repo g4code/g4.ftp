@@ -1,9 +1,10 @@
 
 var folder   = require("./folder")
-JsFtp    = require("jsftp"),
-    fs       = require('fs'),
-    _        = require("underscore"),
-    evento   = require("evento")
+var JsFtp    = require("jsftp")
+var fs       = require('fs')
+var _        = require("underscore")
+var evento   = require("evento")
+var Info     = require('info')
 
 var path  = require('path');
 
